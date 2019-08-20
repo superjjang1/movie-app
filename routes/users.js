@@ -48,9 +48,17 @@ router.post('/loginProcess', (req, res)=>{
   SELECT * FROM users WHERE username =$1 
   `
   const checkUser = db.one(checkUserQuery,[req.body.username])
-    checkUser.then((results)=>{
+  checkUser.then((results)=>{
+    const correctPass = bcrypt.compareSync(req.body.password, results.password)
+    if(correctPass){
+      res.json('logged in')
+    }else{
+      //these aren't the droids we're looking for
+      res.redirect('/login?msg=baddPass')
+    }
     res.json(results);
   })
+
   checkUser.catch((error)=>{
     res.json({
       msg: "userDoesNotExist"
