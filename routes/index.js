@@ -19,21 +19,35 @@ router.get('/', function(req, res, next) {
     console.log(parsedData);
     res.render('index', { parsedData: parsedData.results,
                 imageBaseUrl
-               }
-                );
-  }) 
+               });
+  }); 
 });
 // any time you see a : in an express router, that means it's a wild card
 router.get('/movie/:id',(req, res, next)=>{
   const movieId = req.params.id;
   const thisMovieUrl = `${apiBaseUrl}/movie/${movieId}?api_key=${apiKey}`;
+  // const thisMovieDesc = `${apiBaseUrl}/movie/${movieId}/overview?api_key=${apiKey}`;
   request.get(thisMovieUrl,(error, response, movieData)=>{
     const parsedData = JSON.parse(movieData);
     // res.json(parsedData);
     res.render('single-movie',{
-      parsedData
+      parsedData,
+      imageBaseUrl
     });
+//   request.get(thisMovieDesc,(error, response, descMovie)=>{
+//     const parsedMovieDesc = JSON.parse(descMovie)
+//     res.render('single-movie',{
+//       parsedMovieDesc
+//     });
+//   });
   });
+});
 
+
+
+router.get('/register', (req, res, next)=>{
+  res.render('register',{
+
+  });
 });
 module.exports = router;
