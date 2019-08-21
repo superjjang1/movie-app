@@ -56,7 +56,7 @@ router.post('/loginProcess', (req, res)=>{
       //these aren't the droids we're looking for
       res.redirect('/login?msg=baddPass')
     }
-    res.json(results);
+    // res.json(results);
   })
 
   checkUser.catch((error)=>{
